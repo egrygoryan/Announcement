@@ -40,9 +40,9 @@ public class AnnouncementsController : ControllerBase
     }
     [HttpDelete]
     public IActionResult Delete(int id) {
-        var deleted = _srvc.DeleteAnnouncement(id);
-
-        return Ok(new { Message = "Succesfully deleted" });
+        return _srvc.DeleteAnnouncement(id)
+            ? Ok(new { Message = "Succesfully deleted" })
+            : NotFound(new { Message = "Couldn't find announcement" });
     }
 
 }

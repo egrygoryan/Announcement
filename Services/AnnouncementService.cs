@@ -10,22 +10,15 @@ public class AnnouncementService : IAnnouncementService
     public void AddAnnouncement(Announcement announcement)
     {
         var model = _mapper.Map<AnnouncementModel>(announcement);
+
         _repository.AddAnnouncement(model);
     }
 
-    public bool DeleteAnnouncement(int id)
-    {
-        var entity = _repository.DeleteAnnouncement(id);
-        if (!entity)
-        {
-            throw new InvalidOperationException($"Couldn't delete announcement with ID: {id}");
-        }
-        return entity;
-    }
+    public bool DeleteAnnouncement(int id) => _repository.DeleteAnnouncement(id);
 
     public void EditAnnouncement(int id, Announcement announcement)
     {
-        var model =_repository.GetAnnouncementById(id);
+        _ = _repository.GetAnnouncementById(id);
         var updatedModel = _mapper.Map<AnnouncementModel>(announcement);
         updatedModel.Id = id;
 

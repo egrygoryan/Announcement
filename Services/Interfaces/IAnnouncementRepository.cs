@@ -1,6 +1,6 @@
 ﻿namespace AnnouncementApi.Services.Interfaces;
 
-public interface IAnnouncementRepository : IDisposable
+public interface IAnnouncementRepository
 {
     IEnumerable<AnnouncementModel> GetAnnouncements();
     AnnouncementModel GetAnnouncementById(int id);
