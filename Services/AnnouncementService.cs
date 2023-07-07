@@ -52,13 +52,14 @@ public class AnnouncementService : IAnnouncementService
 
     public IEnumerable<Announcement> GetSimilarAnnouncements(int id)
     {
-        var allModels = _repository.GetAnnouncements();
+        var allModelsExceptChosen = _repository.GetAnnouncements().Where(x => x.Id != id);
         var certainModel = _repository.GetAnnouncementById(id);
 
-        var allAnnouncements = allModels.Select(e => _mapper.Map<Announcement>(e)).ToList();
+        var allAnnouncements = allModelsExceptChosen.Select(e => _mapper.Map<Announcement>(e)).ToList();
         var chosenAnnouncement = _mapper.Map<Announcement>(certainModel);
 
-        var similar = allAnnouncements.Where(a => chosenAnnouncement.HaveSameWords(a)).Take(3);
-        return similar;
+        var similarResults = allAnnouncements.Where(x => chosenAnnouncement.HaveSameWords(x)).Take(3);
+
+        return similarResults;
     }
 }

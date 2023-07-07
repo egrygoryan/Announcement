@@ -7,9 +7,13 @@ public class Announcement
     public DateTime AnnouncementTime { get; set; }
     public bool HaveSameWords(Announcement announcement)
     {
-        string[] primarySet = (Title + " " + Description).Split(" ");
-        string[] announcementSet = (announcement.Title + " " + announcement.Description).Split(" ");
+        var doesTitleMatch = Title.Split(' ')
+            .Intersect(announcement.Title.Split(' '), StringComparer.OrdinalIgnoreCase)
+            .Any();
+        var doesDescriptionMatch = Description.Split(' ')
+            .Intersect(announcement.Description.Split(' '), StringComparer.OrdinalIgnoreCase)
+            .Any();
 
-        return primarySet.Intersect(announcementSet).Any();
+        return doesTitleMatch && doesDescriptionMatch;
     }
 }
